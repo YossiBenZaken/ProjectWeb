@@ -1,0 +1,6 @@
+/WebAPI/bin
+/WebAPI/obj
+/WebApi.Tests/bin
+/WebApi.Tests/obj
+/.vs
+/packages
