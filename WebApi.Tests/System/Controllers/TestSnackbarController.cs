@@ -15,7 +15,7 @@ namespace WebApi.Tests.System.Controllers;
 public class TestSnackbarController
 {
     [Fact]
-    public async Task GetAllAsync_ShouldReturn200()
+    public async Task GetAllSnackbars_ShouldReturn200()
     {
         // Arrange
         var snackbarService = new Mock<ISnackbarService>();
@@ -30,7 +30,7 @@ public class TestSnackbarController
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturn204()
+    public async Task GetAllSnackbars_ShouldReturn204()
     {
         // Arrange
         var snackbarService = new Mock<ISnackbarService>();
@@ -55,9 +55,29 @@ public class TestSnackbarController
         var sut = new SnackbarsController(snackbarService.Object);
 
         // Act
-        var result = await sut.GetSnackbar(snackbar.id);
+        var actionResult = await sut.GetSnackbar(snackbar.id);
+        // Assert
+        var okObjectResult = actionResult as OkObjectResult;
+        Assert.NotNull(okObjectResult);
+        var model = okObjectResult.Value as Snackbar;
+        Assert.NotNull(model);
 
-        Assert.Equal(result.Value!.id, snackbar.id);
+        Assert.Equal(snackbar.id, model.id);
+    }
+    [Fact]
+    public async Task DeleteSnackbarById()
+    {
+        // Arrange
+        var snackbar = new Snackbar { id = 25, product = "Test", price = 5 };
+        var snackbarService = new Mock<ISnackbarService>();
+        snackbarService.Setup(_ => _.GetSnackbar(snackbar.id)).ReturnsAsync(snackbar);
+        var sut = new SnackbarsController(snackbarService.Object);
+
+        // Act
+        var result = (NoContentResult)await sut.DeleteSnackbar(snackbar.id);
+
+        Assert.IsType<NoContentResult>(result);
+        Assert.Equal(204, result.StatusCode);
     }
 
     [Fact]

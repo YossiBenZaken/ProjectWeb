@@ -36,11 +36,11 @@ namespace WebAPI.Controllers
         }
         // GET: api/Snackbars/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Snackbar>> GetSnackbar(int id)
+        public async Task<IActionResult> GetSnackbar(int id)
         {
             var snackbar = await _snackbarService.GetSnackbar(id);
             if (snackbar is null) return NotFound();
-            return snackbar;
+            return Ok(snackbar);
         }
         // PUT: api/Snackbars/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
