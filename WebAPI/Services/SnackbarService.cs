@@ -31,8 +31,13 @@ public class SnackbarService: ISnackbarService
     }
     public async Task updateSnackbar(Snackbar snackbar)
     {
-        _context.Entry(snackbar).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        var oldSnackBar = await _context.Snackbar.FindAsync(snackbar.id);
+        if(oldSnackBar is not null)
+        {
+            oldSnackBar.price = snackbar.price;
+            oldSnackBar.product = snackbar.product;
+            await _context.SaveChangesAsync();
+        }
     }
     public async Task<Snackbar?> SnackbarExists(int id)
     {

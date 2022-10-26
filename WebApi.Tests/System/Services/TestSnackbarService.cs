@@ -56,6 +56,7 @@ public class TestSnackbarService : IDisposable
         _context.SaveChanges();
 
         var newSnackbar = SnackbarMockData.addSnackbar();
+        newSnackbar.id = 30;
         var sut = new SnackbarService(_context);
 
         // Act
@@ -64,6 +65,40 @@ public class TestSnackbarService : IDisposable
         // Assert
         int expectRecordCount = SnackbarMockData.GetSnackbars().Count + 1;
         Assert.Equal(_context.Snackbar.Count(), expectRecordCount);
+    }
+    [Fact]
+    public async Task deleteSnackbar_CheckCount()
+    {
+        // Arrange
+        _context.Snackbar.AddRange(SnackbarMockData.GetSnackbars());
+        _context.SaveChanges();
+
+        var currentCount = SnackbarMockData.GetSnackbars().Count;
+        var sut = new SnackbarService(_context);
+
+        // Act
+        await sut.deleteSnackbar(2);
+
+        // Assert
+        int expectRecordCount = currentCount - 1;
+        Assert.Equal(_context.Snackbar.Count(), expectRecordCount);
+    }
+    [Fact]
+    public async Task updateSnackbar_CheckIfChange()
+    {
+        // Arrange
+        _context.Snackbar.AddRange(SnackbarMockData.GetSnackbars());
+        _context.SaveChanges();
+
+        var sut = new SnackbarService(_context);
+        var snackBar = SnackbarMockData.GetSnackbars()[0];
+        var oldTitle = snackBar.product;
+        snackBar.product = "ChangedName";
+        // Act
+        await sut.updateSnackbar(snackBar);
+
+        // Assert
+        Assert.NotEqual(snackBar.product, oldTitle);
     }
     public void Dispose()
     {

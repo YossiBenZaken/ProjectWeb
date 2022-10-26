@@ -21,13 +21,13 @@ public class SnackbarMockData
             },
             new Snackbar
             {
-                id = 3,
+                id = 26,
                 product = "פופקורן גדול",
                 price = 28
             },
             new Snackbar
             {
-                id = 4,
+                id = 1,
                 product = "שתייה קטנה",
                 price = 17
             },
@@ -46,6 +46,6 @@ public class SnackbarMockData
         };
     }
     public static List<Snackbar> GetEmptySnackbars() => new List<Snackbar>();
-    public static Snackbar addSnackbar() => new Snackbar { id = 25, price = 22, product = "Test" };
-    public static Snackbar updateSnackbar() => new Snackbar { id=25, price = 23, product = "Test2" };
+    public static Snackbar addSnackbar() => new Snackbar { id = 26, price = 22, product = "Test" };
+    public static Snackbar updateSnackbar() => new Snackbar { id=26, price = 23, product = "Test2" };
 }

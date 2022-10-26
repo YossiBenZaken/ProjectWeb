@@ -136,12 +136,12 @@ public class TestSnackbarController
         // Arrage
         var snackbars = SnackbarMockData.GetSnackbars();
         var snackbarService = new Mock<ISnackbarService>();
-        snackbarService.Setup(_ => _.GetSnackbar(snackbars[0].id)).ReturnsAsync(snackbars[0]);
+        snackbarService.Setup(_ => _.GetSnackbar(snackbars[2].id)).ReturnsAsync(snackbars[2]);
         var sut = new SnackbarsController(snackbarService.Object);
         var updatedSnackbar = SnackbarMockData.updateSnackbar();
 
         // Act
-        var result = (NoContentResult)await sut.PutSnackbar(snackbars[0].id, updatedSnackbar);
+        var result = (NoContentResult)await sut.PutSnackbar(snackbars[2].id, updatedSnackbar);
 
         // Assert
         Assert.NotNull(result);
