@@ -15,7 +15,6 @@ public class SnackbarService: ISnackbarService
     public async Task<Snackbar?> GetSnackbar(int id)
     {
         return await _context.Snackbar.Where(_ => _.id == id).FirstOrDefaultAsync();
-        //return await _context.Snackbar.SingleOrDefaultAsync(_ => _.id == id);
     }
 
     public async Task<List<Snackbar>> GetSnackbars() => await _context.Snackbar.ToListAsync();
@@ -35,8 +34,8 @@ public class SnackbarService: ISnackbarService
         _context.Entry(snackbar).State = EntityState.Modified;
         await _context.SaveChangesAsync();
     }
-    public bool SnackbarExists(int id)
+    public async Task<Snackbar?> SnackbarExists(int id)
     {
-        return _context.Snackbar.Any(e => e.id == id);
+        return await _context.Snackbar.SingleOrDefaultAsync(_ => _.id == id);
     }
 }

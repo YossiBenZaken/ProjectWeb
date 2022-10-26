@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetSnackbar()
         {
             var result = await _snackbarService.GetSnackbars();
-            if(result.Count == 0)
+            if (result.Count == 0)
             {
                 return NoContent();
             }
@@ -48,23 +48,13 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> PutSnackbar(int id, Snackbar snackbar)
         {
             if (id != snackbar.id) return BadRequest();
+            var result = await _snackbarService.GetSnackbar(id);
+            if (result is null)
+            {
+                return NotFound();
+            }
+            await _snackbarService.updateSnackbar(snackbar);
 
-            try
-            {
-                await _snackbarService.updateSnackbar(snackbar);
-                Console.WriteLine(snackbar.id);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_snackbarService.SnackbarExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
             return NoContent();
         }

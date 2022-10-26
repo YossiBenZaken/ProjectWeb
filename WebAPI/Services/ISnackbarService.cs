@@ -6,6 +6,6 @@ public interface ISnackbarService
     Task<Snackbar?> GetSnackbar(int id);
     Task createSnackbar(Snackbar snackbar);
     Task deleteSnackbar(int id);
-    bool SnackbarExists(int id);
+    Task<Snackbar?> SnackbarExists(int id);
     Task updateSnackbar(Snackbar snackbar);
 }
