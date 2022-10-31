@@ -1,6 +1,5 @@
-/WebAPI/bin
-/WebAPI/obj
-/WebApi.Tests/bin
-/WebApi.Tests/obj
+/*/bin
+/*/obj
 /.vs
 /packages
+.fake
